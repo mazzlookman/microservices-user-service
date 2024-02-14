@@ -1,7 +1,7 @@
 import supertest from "supertest";
 import {web} from "../../src/app/web.js";
 
-describe("Register user", () => {
+describe("Register user endpoint", () => {
     it("should can register", async () => {
         const res = await supertest(web)
             .post("/users")

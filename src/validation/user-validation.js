@@ -7,6 +7,12 @@ const registerUserRequest = Joi.object({
     profession: Joi.string().optional()
 });
 
+const loginUserRequest = Joi.object({
+    email: Joi.string().email(),
+    password: Joi.string().min(3)
+})
+
 export {
-    registerUserRequest
+    registerUserRequest,
+    loginUserRequest
 }
