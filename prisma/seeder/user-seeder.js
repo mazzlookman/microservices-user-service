@@ -1,4 +1,4 @@
-import {prismaClient} from "../../src/app/database/prisma-client.js";
+import {prismaClient} from "../../src/app/prisma-client.js";
 import bcrypt from "bcrypt";
 
 const createManyUsers = async () => {
