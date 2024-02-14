@@ -4,6 +4,9 @@
   "description": "User Service",
   "main": "src/main.js",
   "type": "module",
+  "prisma": {
+    "seed": "node prisma/seeder/user-seeder.js"
+  },
   "scripts": {
     "test": "jest -i"
   },
