@@ -1,5 +1,5 @@
 import {validate} from "../validation/validation.js";
-import {loginUserRequest, registerUserRequest} from "../validation/user-validation.js";
+import {loginUserRequest, registerUserRequest, updateUserRequest} from "../validation/user-validation.js";
 import {prismaClient} from "../app/prisma-client.js";
 import {ResponseError} from "../exception/response-error.js";
 import bcrypt from "bcrypt";
@@ -57,11 +57,79 @@ const login = async (request) => {
     }
 
     delete user.password;
-    console.log(user)
     return user
+}
+
+const update = async (request, userId) => {
+    const payload = validate(updateUserRequest, request)
+    const {name, email, password, profession, avatar} = payload
+
+    userId = parseInt(userId)
+
+    const findById = await prismaClient.user.findUnique({
+        where: {
+            id: userId
+        },
+        select: {
+            email: true
+        }
+    })
+
+    if (!findById) {
+        throw new ResponseError(404, "Not Found", "User not found")
+    }
+
+    const findByEmail = await prismaClient.user.findUnique({
+        where: {
+            email: email
+        },
+        select: {
+            email: true
+        }
+    })
+
+    if (email !== findById.email && findByEmail) {
+        throw new ResponseError(409, "Conflict", "Email already exists");
+    }
+
+    const fixPayloadToUpdate = {}
+    if (name) {
+        fixPayloadToUpdate.name = name
+    }
+
+    if (email) {
+        fixPayloadToUpdate.email = email
+    }
+
+    if (password) {
+        fixPayloadToUpdate.password = await bcrypt.hash(password, 10)
+    }
+
+    if (profession) {
+        fixPayloadToUpdate.profession = profession
+    }
+
+    if (avatar) {
+        fixPayloadToUpdate.avatar = avatar
+    }
+
+    return prismaClient.user.update({
+        data: fixPayloadToUpdate,
+        where: {
+            id: userId
+        },
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            profession: true,
+            avatar: true
+        }
+    })
 }
 
 export default {
     register,
-    login
+    login,
+    update
 }

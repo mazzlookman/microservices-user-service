@@ -26,7 +26,21 @@ const login = async (req, res, next) => {
     }
 }
 
+const update = async (req, res, next) => {
+    try {
+        const user = await userService.update(req.body, req.params.id);
+        return res.json({
+            code: 200,
+            status: "OK",
+            data: user,
+        });
+    } catch (e) {
+        next(e);
+    }
+}
+
 export default {
     register,
-    login
+    login,
+    update
 }

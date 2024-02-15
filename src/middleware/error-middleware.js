@@ -22,8 +22,9 @@ const errorMiddleware = async (err, req, res, next) => {
             const split = v.message.split(`"`);
             errors.push(
                 {
-                    message: `${split[1]}${split[2]}`,
-                    type: v.type
+                    message: `The '${split[1]}'${split[2]}`,
+                    type: v.type,
+                    field: v.context.key
                 });
         });
         res.status(400).json({

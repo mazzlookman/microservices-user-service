@@ -9,6 +9,6 @@ web.use(logger(process.env.LOG_FORMAT));
 web.use(express.json());
 web.use(express.static("public"));
 
-web.use(userHandler);
+web.use("/users", userHandler);
 
 web.use(errorMiddleware);

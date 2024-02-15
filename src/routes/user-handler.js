@@ -3,5 +3,6 @@ import userController from "../controller/user-controller.js";
 
 export const userHandler = express.Router();
 
-userHandler.post("/users", userController.register);
-userHandler.post("/users/login", userController.login);
+userHandler.post("/", userController.register);
+userHandler.post("/login", userController.login);
+userHandler.patch("/:id", userController.update);
