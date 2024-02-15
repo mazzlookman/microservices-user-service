@@ -45,7 +45,7 @@ describe("Update user's profile endpoint", () => {
 
     it("should fail to update user (404)", async () => {
         const res = await supertest(web)
-            .patch(`/users/4${+1000}`)
+            .patch(`/users/4${+10}`)
             .send({
                 name: "Mario Teguh",
                 email: "marite@test.com",

@@ -128,8 +128,32 @@ const update = async (request, userId) => {
     })
 }
 
+const getUser = async (userId) => {
+    userId = parseInt(userId)
+    const user = await prismaClient.user.findUnique({
+        where: {
+            id: userId
+        },
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            profession: true,
+            avatar: true,
+            role: true
+        }
+    })
+
+    if (!user) {
+        throw new ResponseError(404, "Not Found", "User not found")
+    }
+
+    return user
+}
+
 export default {
     register,
     login,
-    update
+    update,
+    getUser
 }

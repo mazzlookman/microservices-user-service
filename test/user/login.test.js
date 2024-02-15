@@ -6,7 +6,7 @@ describe("Login user endpoint", () => {
         const res = await supertest(web)
             .post("/users/login")
             .send({
-                email: "mario@test.com",
+                email: "aqib@test.com",
                 password: "123",
             })
 
@@ -18,7 +18,7 @@ describe("Login user endpoint", () => {
         const res = await supertest(web)
             .post("/users/login")
             .send({
-                email: "mari@test.com",
+                email: "aqib@test.com",
                 password: "123",
             })
 
@@ -29,8 +29,8 @@ describe("Login user endpoint", () => {
         const res = await supertest(web)
             .post("/users/login")
             .send({
-                email: "mario@test.com",
-                password: "1234",
+                email: "aqib@test.com",
+                password: "123",
             })
 
         expect(res.status).toBe(400)
