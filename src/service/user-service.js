@@ -151,9 +151,41 @@ const getUser = async (userId) => {
     return user
 }
 
+const getUsers = async (Ids) => {
+    const query = {
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            profession: true,
+            avatar: true,
+            role: true
+        }
+    }
+
+    if (Ids.length) {
+        query.where = {
+            id : {
+                in: Ids
+            }
+        }
+    }
+
+    console.log(query)
+
+    const users = await prismaClient.user.findMany(query)
+
+    if (!users) {
+        throw new ResponseError(404, "Not Found", "No users found")
+    }
+
+    return users
+}
+
 export default {
     register,
     login,
     update,
-    getUser
+    getUser,
+    getUsers
 }

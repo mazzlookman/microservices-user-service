@@ -52,9 +52,30 @@ const getUser = async (req, res, next) => {
     }
 }
 
+const getUsers = async (req, res, next) => {
+    try {
+        const Ids = []
+        if (req.query.id) {
+            req.query.id.map((v) => {
+                Ids.push(parseInt(v))
+            })
+        }
+
+        const user = await userService.getUsers(Ids);
+        return res.json({
+            code: 200,
+            status: "OK",
+            data: user,
+        });
+    } catch (e) {
+        next(e);
+    }
+}
+
 export default {
     register,
     login,
     update,
-    getUser
+    getUser,
+    getUsers
 }
