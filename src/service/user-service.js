@@ -182,10 +182,28 @@ const getUsers = async (Ids) => {
     return users
 }
 
+const logout = async (userId) => {
+    const user = await prismaClient.user.findUnique({
+        where: {
+            id: userId
+        },
+        select: {
+            id: true
+        }
+    })
+
+    if (!user) {
+        throw new ResponseError(404, "Not Found", "User not found")
+    }
+
+    return prismaClient.$executeRaw`delete from refresh_tokens where user_id=${userId}`
+}
+
 export default {
     register,
     login,
     update,
     getUser,
-    getUsers
+    getUsers,
+    logout
 }

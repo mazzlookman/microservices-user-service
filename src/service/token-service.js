@@ -36,12 +36,13 @@ const getToken = async (token) => {
         },
         select: {
             id: true,
-            token: true
+            token: true,
+            user_id: true
         }
     })
 
     if (!token) {
-        throw new ResponseError(400, "Bad Request", "Invalid token")
+        throw new ResponseError(401, "Unauthorized", "Invalid token")
     }
 
     return token

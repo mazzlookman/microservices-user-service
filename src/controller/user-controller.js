@@ -72,10 +72,26 @@ const getUsers = async (req, res, next) => {
     }
 }
 
+const logout = async (req, res, next) => {
+    try {
+        await userService.logout(req.body.user_id);
+        return res.json({
+            code: 200,
+            status: "OK",
+            data: {
+                is_logged_out: true
+            },
+        });
+    } catch (e) {
+        next(e);
+    }
+}
+
 export default {
     register,
     login,
     update,
     getUser,
-    getUsers
+    getUsers,
+    logout
 }
