@@ -1,7 +1,8 @@
 import express from "express";
 import logger from "morgan"
 import {errorMiddleware} from "../middleware/error-middleware.js";
-import {userHandler} from "../routes/user-handler.js";
+import {userRouter} from "../routes/user-router.js";
+import {tokenRouter} from "../routes/token-router.js";
 
 export const web = express();
 
@@ -9,6 +10,7 @@ web.use(logger(process.env.LOG_FORMAT));
 web.use(express.json());
 web.use(express.static("public"));
 
-web.use("/users", userHandler);
+web.use("/users", userRouter);
+web.use("/refresh-token", tokenRouter)
 
 web.use(errorMiddleware);
