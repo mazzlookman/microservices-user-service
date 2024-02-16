@@ -29,6 +29,25 @@ const create = async (request) => {
     })
 }
 
+const getToken = async (token) => {
+    token = await prismaClient.refreshToken.findFirst({
+        where: {
+            token: token
+        },
+        select: {
+            id: true,
+            token: true
+        }
+    })
+
+    if (!token) {
+        throw new ResponseError(400, "Bad Request", "Invalid token")
+    }
+
+    return token
+}
+
 export default {
-    create
+    create,
+    getToken
 }

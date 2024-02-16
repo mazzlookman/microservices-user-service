@@ -13,6 +13,20 @@ const create = async (req, res, next) => {
     }
 }
 
+const getToken = async (req, res, next) => {
+    try {
+        const token = await tokenService.getToken(req.query.token)
+        return res.json({
+            code: 200,
+            status: "OK",
+            data: token,
+        })
+    } catch (e) {
+        next(e)
+    }
+}
+
 export default {
-    create
+    create,
+    getToken
 }
