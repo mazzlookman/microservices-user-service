@@ -1,6 +1,10 @@
 import {PrismaClient} from "@prisma/client";
 
-export const prismaClient = new PrismaClient({
-   errorFormat: "pretty",
-   log: ["info", "warn", "error"]
-});
+const optionsArg = {}
+
+if (process.env.ENV === "dev") {
+   optionsArg.errorFormat = "pretty"
+   optionsArg.log = ["query","info", "warn", "error"]
+}
+
+export const prismaClient = new PrismaClient(optionsArg);
