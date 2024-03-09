@@ -10,7 +10,7 @@ web.use(logger(process.env.LOG_FORMAT));
 web.use(express.json());
 web.use(express.static("public"));
 
-web.use("/users", userRouter);
-web.use("/refresh-token", tokenRouter)
+web.use("/api/users", userRouter);
+web.use("/api/refresh-token", tokenRouter)
 
 web.use(errorMiddleware);

@@ -3,9 +3,9 @@ import tokenService from "../service/token-service.js";
 const create = async (req, res, next) => {
     try {
         const token = await tokenService.create(req.body)
-        return res.json({
-            code: 200,
-            status: "OK",
+        return res.status(201).json({
+            code: 201,
+            status: "Created",
             data: token,
         })
     } catch (e) {
